@@ -19,6 +19,8 @@ class ResourceViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.rowHeight = 80
+        
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
         fillAnalogueRows()
@@ -53,8 +55,10 @@ class ResourceViewController: UITableViewController {
                 cell.detailTextLabel?.text = resource.name ?? ""
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath)
-                cell.textLabel?.text = resource.offers?[indexPath.row - 1].warehouse?.name ?? ""
+                let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath) as! OfferCell
+                if let offer = resource.offers?[indexPath.row - 1] {
+                    cell.configure(with: offer)
+                }
                 return cell
             }
         } else {
@@ -65,13 +69,11 @@ class ResourceViewController: UITableViewController {
                 cell.detailTextLabel?.text = resource.name ?? ""
                 return cell
             case let offer as Offer:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath)
-                cell.textLabel?.text = offer.warehouse?.name ?? ""
+                let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath) as! OfferCell
+                cell.configure(with: offer)
                 return cell
             default:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath)
-                cell.textLabel?.text = "analogue"
-                return cell
+                return tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath)
             }
         }
     }
@@ -85,11 +87,6 @@ class ResourceViewController: UITableViewController {
         guard let url = URL(string: apiUrl) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
-            
-            //            print(error)
-            //            print(response)
-            //            print(data)
-            
             guard let data = data else { return }
             
             do {

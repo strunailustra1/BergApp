@@ -31,12 +31,6 @@ class SearchViewController: UITableViewController {
         
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
@@ -93,11 +87,6 @@ extension SearchViewController: UISearchBarDelegate {
         guard let url = URL(string: apiUrl) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
-            
-            //            print(error)
-            //            print(response)
-            //            print(data)
-            
             guard let data = data else { return }
             
             do {
