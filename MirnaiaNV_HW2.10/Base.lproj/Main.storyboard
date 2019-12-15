@@ -15,7 +15,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" textLabel="mlA-Y3-dUC" detailTextLabel="dcK-ep-GsO" style="IBUITableViewCellStyleSubtitle" id="1RK-HZ-Xci" customClass="ResourceCell" customModule="MirnaiaNV_HW2_10" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="resourceCell" textLabel="mlA-Y3-dUC" detailTextLabel="dcK-ep-GsO" style="IBUITableViewCellStyleSubtitle" id="1RK-HZ-Xci" customClass="ResourceCell" customModule="MirnaiaNV_HW2_10" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="64.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1RK-HZ-Xci" id="NG4-zv-aDc">

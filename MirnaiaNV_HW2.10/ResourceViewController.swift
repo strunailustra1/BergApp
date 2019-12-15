@@ -53,33 +53,21 @@ class ResourceViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 && indexPath.row == 0 {
-            return createResourceCell(with: resource, for: indexPath)
+            return ResourceCell.create(with: resource, for: indexPath, tableView: tableView)
         }
         
         if indexPath.section == 0 && indexPath.row != 0 {
-            return createOfferCell(with: (resource.offers?[indexPath.row - 1])!, for: indexPath)
+            return OfferCell.create(with: (resource.offers?[indexPath.row - 1])!, for: indexPath, tableView: tableView)
         }
         
         switch analoguesRows[indexPath.row] {
         case let resource as Resource:
-            return createResourceCell(with: resource, for: indexPath)
+            return ResourceCell.create(with: resource, for: indexPath, tableView: tableView)
         case let offer as Offer:
-            return createOfferCell(with: offer, for: indexPath)
+            return OfferCell.create(with: offer, for: indexPath, tableView: tableView)
         default:
             return tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath) as! ResourceCell
         }
-    }
-    
-    private func createResourceCell(with resource: Resource, for indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath) as! ResourceCell
-        cell.configure(with: resource)
-        return cell
-    }
-    
-    private func createOfferCell(with offer: Offer, for indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath) as! OfferCell
-        cell.configure(with: offer)
-        return cell
     }
     
     func fillAnalogueRows() {

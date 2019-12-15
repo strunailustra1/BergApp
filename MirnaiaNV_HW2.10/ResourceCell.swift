@@ -16,4 +16,10 @@ class ResourceCell: UITableViewCell {
         titleLabel.text = resource.titleText
         subtitleLabel.text = resource.name ?? ""
     }
+    
+    static func create(with resource: Resource, for indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath) as! ResourceCell
+        cell.configure(with: resource)
+        return cell
+    }
 }

@@ -22,4 +22,10 @@ class OfferCell: UITableViewCell {
         averagePeriodLabel.text = String(offer.average_period ?? 0) + " дн."
         reliabilityLabel.text = String(offer.reliability ?? 0) + "%"
     }
+    
+    static func create(with offer: Offer, for indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath) as! OfferCell
+        cell.configure(with: offer)
+        return cell
+    }
 }

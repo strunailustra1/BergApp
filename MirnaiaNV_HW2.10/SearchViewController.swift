@@ -40,9 +40,7 @@ class SearchViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! ResourceCell
-        cell.configure(with: resources[indexPath.row])
-        return cell
+        ResourceCell.create(with: resources[indexPath.row], for: indexPath, tableView: tableView) 
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
