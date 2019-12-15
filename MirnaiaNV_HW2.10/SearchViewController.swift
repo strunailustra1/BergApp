@@ -56,7 +56,6 @@ class SearchViewController: UITableViewController {
     }
 
     // MARK: - Navigation
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "goToResource" else { return }
         
@@ -64,11 +63,12 @@ class SearchViewController: UITableViewController {
         
         switch sender {
         case let resource as Resource:
-            guard  let article = resource.article else { return }
-            guard  let brand = resource.brand?.name else { return }
+            guard let article = resource.article else { return }
+            guard let brand = resource.brand?.name else { return }
+            resourceVC.resource = resource
             resourceVC.fetchResources(for: article, brand: brand)
-        case let resources as [Resource]:
-            resourceVC.resources = resources
+        case let resources as (Resource, [Resource]):
+            (resourceVC.resource, resourceVC.resources) = resources
         default:
             return
         }
@@ -97,9 +97,9 @@ extension SearchViewController: UISearchBarDelegate {
             //            print(error)
             //            print(response)
             //            print(data)
-
+            
             guard let data = data else { return }
-
+            
             do {
                 let apiResult = try JSONDecoder().decode(SearchResult.self, from: data)
                 self.resources = apiResult.resources ?? []
@@ -109,9 +109,17 @@ extension SearchViewController: UISearchBarDelegate {
                     // по артикулу найден один ресурс, тогда переходим к нему
                     // если по артикулу найдено несколько ресурсов, то получаем 300 код ответа
                     if httpResponse.statusCode == 200 {
-                        self.performSegue(withIdentifier: "goToResource", sender: apiResult.resources)
+                        var searchResource: Resource?
+                        for resource in apiResult.resources! {
+                            if resource.isEquals(by: article) {
+                                searchResource = resource
+                            }
+                        }
+                        if let searchResource = searchResource {
+                            self.performSegue(withIdentifier: "goToResource", sender: (searchResource, apiResult.resources))
+                        }
                     }
-
+                    
                     self.activityIndicator.stopAnimating()
                     self.tableView.reloadData()
                 }

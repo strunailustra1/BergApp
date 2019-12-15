@@ -6,6 +6,10 @@
 //  Copyright © 2019 Наталья Мирная. All rights reserved.
 //
 
+import Foundation
+
+let searchNumberRegex = try! NSRegularExpression(pattern: "[^A-ZА-Я0-9]", options: NSRegularExpression.Options.caseInsensitive)
+
 struct SearchResult: Decodable {
     let resources: [Resource]?
     let warnings: [SearchError]?
@@ -31,6 +35,25 @@ struct Resource: Decodable {
     
     var titleText: String {
         "\(article ?? "") - \(brand?.name ?? "")"
+    }
+    
+    var searchNumber: String {
+        getSearchNumber(by: article ?? "")
+    }
+    
+    func isEquals(by article: String) -> Bool {
+        getSearchNumber(by: article) == searchNumber
+    }
+    
+    private func getSearchNumber(by article: String) -> String {
+        // preg_replace('/[^A-ZА-Я0-9]/u', '', mb_strtoupper($article, 'UTF-8'))
+        let articleUpper = article.uppercased()
+        return searchNumberRegex.stringByReplacingMatches(
+            in: articleUpper,
+            options: [],
+            range: NSMakeRange(0, article.count),
+            withTemplate: ""
+        )
     }
 }
 
