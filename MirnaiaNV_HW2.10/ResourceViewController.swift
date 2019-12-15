@@ -52,32 +52,34 @@ class ResourceViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath) as! ResourceCell
-                cell.configure(with: resource)
-                return cell
-            } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath) as! OfferCell
-                if let offer = resource.offers?[indexPath.row - 1] {
-                    cell.configure(with: offer)
-                }
-                return cell
-            }
-        } else {
-            switch analoguesRows[indexPath.row] {
-            case let resource as Resource:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath) as! ResourceCell
-                cell.configure(with: resource)
-                return cell
-            case let offer as Offer:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath) as! OfferCell
-                cell.configure(with: offer)
-                return cell
-            default:
-                return tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath) as! ResourceCell
-            }
+        if indexPath.section == 0 && indexPath.row == 0 {
+            return createResourceCell(with: resource, for: indexPath)
         }
+        
+        if indexPath.section == 0 && indexPath.row != 0 {
+            return createOfferCell(with: (resource.offers?[indexPath.row - 1])!, for: indexPath)
+        }
+        
+        switch analoguesRows[indexPath.row] {
+        case let resource as Resource:
+            return createResourceCell(with: resource, for: indexPath)
+        case let offer as Offer:
+            return createOfferCell(with: offer, for: indexPath)
+        default:
+            return tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath) as! ResourceCell
+        }
+    }
+    
+    private func createResourceCell(with resource: Resource, for indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath) as! ResourceCell
+        cell.configure(with: resource)
+        return cell
+    }
+    
+    private func createOfferCell(with offer: Offer, for indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath) as! OfferCell
+        cell.configure(with: offer)
+        return cell
     }
     
     func fetchResources(for article: String, brand: String) {
