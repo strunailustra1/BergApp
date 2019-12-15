@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Поиск автозапчастей-->
         <scene sceneID="I3l-y1-x6x">
             <objects>
                 <tableViewController id="fiU-Xg-XbT" customClass="SearchViewController" customModule="MirnaiaNV_HW2_10" customModuleProvider="target" sceneMemberID="viewController">
@@ -45,7 +45,7 @@
                             <outlet property="delegate" destination="fiU-Xg-XbT" id="5Ma-m6-4hc"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="Dci-9b-V06"/>
+                    <navigationItem key="navigationItem" title="Поиск автозапчастей" id="Dci-9b-V06"/>
                     <connections>
                         <segue destination="fJT-vs-z7r" kind="show" identifier="goToResource" id="j6h-A8-WFz"/>
                     </connections>
