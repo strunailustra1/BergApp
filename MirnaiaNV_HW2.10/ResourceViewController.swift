@@ -14,7 +14,7 @@ class ResourceViewController: UITableViewController {
     var analogues: [Resource] = []
     var analoguesRows: [Any] = []
     
-    private let activityIndicator = UIActivityIndicatorView(style: .medium)
+    let activityIndicator = UIActivityIndicatorView(style: .medium)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,40 +82,7 @@ class ResourceViewController: UITableViewController {
         return cell
     }
     
-    func fetchResources(for article: String, brand: String) {
-        guard let escapedArticle = article.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
-        guard let escapedBrand = brand.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
-        
-        let apiUrl = "https://api.berg.ru/ordering/get_stock.json?items[0][resource_article]=\(escapedArticle)&items[0][brand_name]=\(escapedBrand)&analogs=1&key=2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e730"
-        
-        guard let url = URL(string: apiUrl) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else { return }
-            
-            do {
-                let apiResult = try JSONDecoder().decode(SearchResult.self, from: data)
-                for resource in (apiResult.resources ?? []) {
-                    if resource.isEquals(by: article) {
-                        self.resource = resource
-                    } else {
-                        self.analogues.append(resource)
-                    }
-                }
-                
-                DispatchQueue.main.async {
-                    self.activityIndicator.stopAnimating()
-                    self.fillAnalogueRows()
-                    self.tableView.reloadData()
-                }
-            } catch let error {
-                print(error.localizedDescription)
-                print(error)
-            }
-        }.resume()
-    }
-    
-    private func fillAnalogueRows() {
+    func fillAnalogueRows() {
         analoguesRows = []
         for resource in analogues {
             analoguesRows.append(resource)

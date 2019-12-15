@@ -10,17 +10,18 @@ import UIKit
 
 class SearchViewController: UITableViewController {
     
-    private var resources: [Resource] = []
+    var resources: [Resource] = []
+    
+    let activityIndicator = UIActivityIndicatorView(style: .medium)
     
     private let searchController = UISearchController(searchResultsController: nil)
-    private let activityIndicator = UIActivityIndicatorView(style: .medium)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Setup the Search Controller
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.placeholder = "Артикул, 65550, GDB1044"
         searchController.searchBar.autocapitalizationType = .none
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
@@ -59,7 +60,7 @@ class SearchViewController: UITableViewController {
             guard let article = resource.article else { return }
             guard let brand = resource.brand?.name else { return }
             resourceVC.resource = resource
-            resourceVC.fetchResources(for: article, brand: brand)
+            NetworkManager.instance.fetchResources(for: article, brand: brand, resourceVC: resourceVC)
         case let resources as (Resource, [Resource]):
             (resourceVC.resource, resourceVC.analogues) = resources
         default:
@@ -78,52 +79,7 @@ extension SearchViewController: UISearchBarDelegate {
             resources = []
             tableView.reloadData()
             activityIndicator.startAnimating()
-            fetchResources(for: article)
+            NetworkManager.instance.fetchResources(for: article, searchVC: self)
         }
-    }
-    
-    func fetchResources(for article: String) {
-        guard let escapedArticle = article.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
-        
-        let apiUrl = "https://api.berg.ru/ordering/get_stock.json?items[0][resource_article]=\(escapedArticle)&analogs=1&key=2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e730"
-        
-        guard let url = URL(string: apiUrl) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else { return }
-            
-            do {
-                let apiResult = try JSONDecoder().decode(SearchResult.self, from: data)
-                
-                DispatchQueue.main.async {
-                    let httpResponse = response as! HTTPURLResponse
-                    // по артикулу найден один ресурс, тогда переходим к нему
-                    // если по артикулу найдено несколько ресурсов, то получаем 300 код ответа
-                    if httpResponse.statusCode == 200 {
-                        var searchResource: Resource?
-                        var analogues: [Resource] = []
-                        for resource in (apiResult.resources ?? []) {
-                            if resource.isEquals(by: article) {
-                                searchResource = resource
-                            } else {
-                                analogues.append(resource)
-                            }
-                        }
-                        if let searchResource = searchResource {
-                            self.resources = [searchResource]
-                            self.performSegue(withIdentifier: "goToResource", sender: (searchResource, analogues))
-                        }
-                    } else {
-                        self.resources = apiResult.resources ?? []
-                    }
-                    
-                    self.activityIndicator.stopAnimating()
-                    self.tableView.reloadData()
-                }
-            } catch let error {
-                print(error.localizedDescription)
-                print(error)
-            }
-        }.resume()
     }
 }

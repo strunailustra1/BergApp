@@ -17,6 +17,7 @@
 		1E284A6023A654480065D26B /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E284A5F23A654480065D26B /* SearchResult.swift */; };
 		1ED7552223A6B748009D555F /* OfferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED7552123A6B748009D555F /* OfferCell.swift */; };
 		1ED7552423A6C019009D555F /* ResourceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED7552323A6C019009D555F /* ResourceCell.swift */; };
+		1ED7552623A6CF1A009D555F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED7552523A6CF1A009D555F /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		1E284A5F23A654480065D26B /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		1ED7552123A6B748009D555F /* OfferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferCell.swift; sourceTree = "<group>"; };
 		1ED7552323A6C019009D555F /* ResourceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCell.swift; sourceTree = "<group>"; };
+		1ED7552523A6CF1A009D555F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				1E284A5B23A643810065D26B /* SearchViewController.swift */,
 				1E284A5F23A654480065D26B /* SearchResult.swift */,
 				1E284A5D23A643E50065D26B /* ResourceViewController.swift */,
+				1ED7552523A6CF1A009D555F /* NetworkManager.swift */,
 				1E284A4D23A63EF10065D26B /* Main.storyboard */,
 				1ED7552123A6B748009D555F /* OfferCell.swift */,
 				1ED7552323A6C019009D555F /* ResourceCell.swift */,
@@ -154,6 +157,7 @@
 				1E284A5C23A643810065D26B /* SearchViewController.swift in Sources */,
 				1ED7552223A6B748009D555F /* OfferCell.swift in Sources */,
 				1ED7552423A6C019009D555F /* ResourceCell.swift in Sources */,
+				1ED7552623A6CF1A009D555F /* NetworkManager.swift in Sources */,
 				1E284A6023A654480065D26B /* SearchResult.swift in Sources */,
 				1E284A5E23A643E50065D26B /* ResourceViewController.swift in Sources */,
 				1E284A4A23A63EF10065D26B /* SceneDelegate.swift in Sources */,
