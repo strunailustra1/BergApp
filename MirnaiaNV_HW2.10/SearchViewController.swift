@@ -39,9 +39,8 @@ class SearchViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath)
-        cell.textLabel?.text = resources[indexPath.row].titleText
-        cell.detailTextLabel?.text = resources[indexPath.row].name ?? ""
+        let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! ResourceCell
+        cell.configure(with: resources[indexPath.row])
         return cell
     }
 
@@ -91,7 +90,6 @@ extension SearchViewController: UISearchBarDelegate {
             
             do {
                 let apiResult = try JSONDecoder().decode(SearchResult.self, from: data)
-                self.resources = apiResult.resources ?? []
                 
                 DispatchQueue.main.async {
                     let httpResponse = response as! HTTPURLResponse
@@ -108,8 +106,11 @@ extension SearchViewController: UISearchBarDelegate {
                             }
                         }
                         if let searchResource = searchResource {
+                            self.resources = [searchResource]
                             self.performSegue(withIdentifier: "goToResource", sender: (searchResource, analogues))
                         }
+                    } else {
+                        self.resources = apiResult.resources ?? []
                     }
                     
                     self.activityIndicator.stopAnimating()

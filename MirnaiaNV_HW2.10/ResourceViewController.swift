@@ -19,7 +19,7 @@ class ResourceViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.rowHeight = 80
+        tableView.rowHeight = 70
         
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
@@ -50,9 +50,8 @@ class ResourceViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath)
-                cell.textLabel?.text = resource.titleText
-                cell.detailTextLabel?.text = resource.name ?? ""
+                let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath) as! ResourceCell
+                cell.configure(with: resource)
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath) as! OfferCell
@@ -64,16 +63,15 @@ class ResourceViewController: UITableViewController {
         } else {
             switch analoguesRows[indexPath.row] {
             case let resource as Resource:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath)
-                cell.textLabel?.text = resource.titleText
-                cell.detailTextLabel?.text = resource.name ?? ""
+                let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath) as! ResourceCell
+                cell.configure(with: resource)
                 return cell
             case let offer as Offer:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath) as! OfferCell
                 cell.configure(with: offer)
                 return cell
             default:
-                return tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath)
+                return tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath) as! ResourceCell
             }
         }
     }
