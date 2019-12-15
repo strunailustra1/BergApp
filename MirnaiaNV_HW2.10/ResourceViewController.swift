@@ -12,6 +12,7 @@ class ResourceViewController: UITableViewController {
 
     var resource: Resource!
     var analogues: [Resource] = []
+    var analoguesRows: [Any] = []
     
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
     
@@ -20,6 +21,7 @@ class ResourceViewController: UITableViewController {
         
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
+        fillAnalogueRows()
     }
 
     // MARK: - Table view data source
@@ -44,9 +46,34 @@ class ResourceViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath)
-
-        return cell
+        if indexPath.section == 0 {
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath)
+                cell.textLabel?.text = resource.titleText
+                cell.detailTextLabel?.text = resource.name ?? ""
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath)
+                cell.textLabel?.text = resource.offers?[indexPath.row - 1].warehouse?.name ?? ""
+                return cell
+            }
+        } else {
+            switch analoguesRows[indexPath.row] {
+            case let resource as Resource:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath)
+                cell.textLabel?.text = resource.titleText
+                cell.detailTextLabel?.text = resource.name ?? ""
+                return cell
+            case let offer as Offer:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath)
+                cell.textLabel?.text = offer.warehouse?.name ?? ""
+                return cell
+            default:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath)
+                cell.textLabel?.text = "analogue"
+                return cell
+            }
+        }
     }
     
     func fetchResources(for article: String, brand: String) {
@@ -62,9 +89,9 @@ class ResourceViewController: UITableViewController {
             //            print(error)
             //            print(response)
             //            print(data)
-
+            
             guard let data = data else { return }
-
+            
             do {
                 let apiResult = try JSONDecoder().decode(SearchResult.self, from: data)
                 for resource in (apiResult.resources ?? []) {
@@ -77,6 +104,7 @@ class ResourceViewController: UITableViewController {
                 
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
+                    self.fillAnalogueRows()
                     self.tableView.reloadData()
                 }
             } catch let error {
@@ -84,5 +112,20 @@ class ResourceViewController: UITableViewController {
                 print(error)
             }
         }.resume()
+    }
+    
+    private func fillAnalogueRows() {
+        analoguesRows = []
+        for resource in analogues {
+            analoguesRows.append(resource)
+            var offersCount = 0
+            for offer in resource.offers ?? [] {
+                analoguesRows.append(offer)
+                offersCount += 1
+                if offersCount == 5 {
+                    break
+                }
+            }
+        }
     }
 }
