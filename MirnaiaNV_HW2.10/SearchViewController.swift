@@ -65,6 +65,10 @@ class SearchViewController: UITableViewController {
         default:
             return
         }
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = resourceVC.resource.article
+        navigationItem.backBarButtonItem = backItem
     }
 }
 

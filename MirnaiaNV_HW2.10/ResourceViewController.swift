@@ -18,11 +18,15 @@ class ResourceViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.rowHeight = 70
+
+        tableView.estimatedRowHeight = 70
+        tableView.rowHeight = UITableView.automaticDimension
         
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
+
+        navigationItem.title = resource.titleText
+        
         fillAnalogueRows()
     }
 
