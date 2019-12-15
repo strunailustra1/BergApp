@@ -11,7 +11,7 @@ import UIKit
 class ResourceViewController: UITableViewController {
 
     var resource: Resource!
-    var resources: [Resource] = []
+    var analogues: [Resource] = []
     
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
     
@@ -20,31 +20,31 @@ class ResourceViewController: UITableViewController {
         
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
-        
-        print(resource)
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        analogues.count > 0 ? 2 : 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        if section == 0 {
+            return min((resource.offers?.count ?? 0), 5) + 1
+        } else {
+            var numberOfRowsInAnalogues = 0
+            for resource in analogues {
+                numberOfRowsInAnalogues += min((resource.offers?.count ?? 0), 5) + 1
+            }
+            return numberOfRowsInAnalogues
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        section == 0 ? "Искомый товар" : "Аналоги"
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath)
 
         return cell
     }
@@ -67,8 +67,13 @@ class ResourceViewController: UITableViewController {
 
             do {
                 let apiResult = try JSONDecoder().decode(SearchResult.self, from: data)
-                self.resources = apiResult.resources ?? []
-                //print(apiResult.resources)
+                for resource in (apiResult.resources ?? []) {
+                    if resource.isEquals(by: article) {
+                        self.resource = resource
+                    } else {
+                        self.analogues.append(resource)
+                    }
+                }
                 
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
@@ -80,5 +85,4 @@ class ResourceViewController: UITableViewController {
             }
         }.resume()
     }
-
 }

@@ -68,7 +68,7 @@ class SearchViewController: UITableViewController {
             resourceVC.resource = resource
             resourceVC.fetchResources(for: article, brand: brand)
         case let resources as (Resource, [Resource]):
-            (resourceVC.resource, resourceVC.resources) = resources
+            (resourceVC.resource, resourceVC.analogues) = resources
         default:
             return
         }
@@ -110,13 +110,16 @@ extension SearchViewController: UISearchBarDelegate {
                     // если по артикулу найдено несколько ресурсов, то получаем 300 код ответа
                     if httpResponse.statusCode == 200 {
                         var searchResource: Resource?
-                        for resource in apiResult.resources! {
+                        var analogues: [Resource] = []
+                        for resource in (apiResult.resources ?? []) {
                             if resource.isEquals(by: article) {
                                 searchResource = resource
+                            } else {
+                                analogues.append(resource)
                             }
                         }
                         if let searchResource = searchResource {
-                            self.performSegue(withIdentifier: "goToResource", sender: (searchResource, apiResult.resources))
+                            self.performSegue(withIdentifier: "goToResource", sender: (searchResource, analogues))
                         }
                     }
                     
