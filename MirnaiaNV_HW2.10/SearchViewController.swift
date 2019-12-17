@@ -58,7 +58,21 @@ class SearchViewController: UITableViewController {
             guard let article = resource.article else { return }
             guard let brand = resource.brand?.name else { return }
             resourceVC.resource = resource
-            NetworkManager.instance.fetchResourcesAlamofire(for: article, brand: brand, resourceVC: resourceVC)
+            NetworkManager.instance.fetchResourcesAlamofire(for: article, brand: brand) { result in
+                for resource in (result.resources ?? []) {
+                    if resource.isEquals(by: article) {
+                        resourceVC.resource = resource
+                    } else {
+                        resourceVC.analogues.append(resource)
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    resourceVC.activityIndicator.stopAnimating()
+                    resourceVC.fillAnalogueRows()
+                    resourceVC.tableView.reloadData()
+                }
+            }
         case let resources as (Resource, [Resource]):
             (resourceVC.resource, resourceVC.analogues) = resources
         default:
@@ -77,7 +91,33 @@ extension SearchViewController: UISearchBarDelegate {
             resources = []
             tableView.reloadData()
             activityIndicator.startAnimating()
-            NetworkManager.instance.fetchResourcesAlamofire(for: article, searchVC: self)
+            NetworkManager.instance.fetchResourcesAlamofire(for: article) { result, response in
+                DispatchQueue.main.async {
+                    //let httpResponse = response as! HTTPURLResponse
+                    // по артикулу найден один ресурс, тогда переходим к нему
+                    // если по артикулу найдено несколько ресурсов, то получаем 300 код ответа
+                    if response?.statusCode == 200 {
+                        var searchResource: Resource?
+                        var analogues: [Resource] = []
+                        for resource in (result.resources ?? []) {
+                            if resource.isEquals(by: article) {
+                                searchResource = resource
+                            } else {
+                                analogues.append(resource)
+                            }
+                        }
+                        if let searchResource = searchResource {
+                            self.resources = [searchResource]
+                            self.performSegue(withIdentifier: "goToResource", sender: (searchResource, analogues))
+                        }
+                    } else {
+                        self.resources = result.resources ?? []
+                    }
+                    
+                    self.activityIndicator.stopAnimating()
+                    self.tableView.reloadData()
+                }
+            }
         }
     }
 }
