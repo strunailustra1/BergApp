@@ -58,7 +58,7 @@ class SearchViewController: UITableViewController {
             guard let article = resource.article else { return }
             guard let brand = resource.brand?.name else { return }
             resourceVC.resource = resource
-            NetworkManager.instance.fetchResources(for: article, brand: brand, resourceVC: resourceVC)
+            NetworkManager.instance.fetchResourcesAlamofire(for: article, brand: brand, resourceVC: resourceVC)
         case let resources as (Resource, [Resource]):
             (resourceVC.resource, resourceVC.analogues) = resources
         default:
@@ -77,7 +77,7 @@ extension SearchViewController: UISearchBarDelegate {
             resources = []
             tableView.reloadData()
             activityIndicator.startAnimating()
-            NetworkManager.instance.fetchResources(for: article, searchVC: self)
+            NetworkManager.instance.fetchResourcesAlamofire(for: article, searchVC: self)
         }
     }
 }

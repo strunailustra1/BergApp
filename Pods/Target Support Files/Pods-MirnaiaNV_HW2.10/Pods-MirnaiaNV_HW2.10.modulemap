@@ -1,0 +1,6 @@
+framework module Pods_MirnaiaNV_HW2_10 {
+  umbrella header "Pods-MirnaiaNV_HW2.10-umbrella.h"
+
+  export *
+  module * { export * }
+}
