@@ -88,10 +88,14 @@ class NetworkManager {
         }.resume()
     }
     
-    func fetchResourcesAlamofire(for article: String, with completion: @escaping (SearchResult, HTTPURLResponse?) -> Void) {
+    func fetchResourcesAlamofire(for article: String, brand: String = "", with completion: @escaping (SearchResult, HTTPURLResponse?) -> Void) {
+        var items = [["resource_article": article]]
+        if brand != "" {
+            items.append(["brand_name":brand])
+        }
         request(bergApiUrl,
                 method: .get,
-                parameters: ["items": [["resource_article": article]],
+                parameters: ["items": items,
                              "analogs": 1,
                              "key": bergApiKey],
                 encoding: URLEncoding.default).validate(statusCode: 200..<301).responseData { dataResponse in
@@ -100,26 +104,6 @@ class NetworkManager {
                         do {
                             let apiResult = try JSONDecoder().decode(SearchResult.self, from: value)
                             completion(apiResult, dataResponse.response)
-                        } catch {}
-                    case .failure(let error):
-                        print(error)
-                    }
-        }
-    }
-    
-    func fetchResourcesAlamofire(for article: String, brand: String, with completion: @escaping (SearchResult) -> Void) {
-        request(bergApiUrl,
-                method: .get,
-                parameters: [
-                    "items": [["resource_article":article],["brand_name":brand]],
-                    "analogs": 1,
-                    "key": bergApiKey],
-                encoding: URLEncoding.default).validate().responseData { dataResponse in
-                    switch dataResponse.result {
-                    case .success(let value):
-                        do {
-                            let apiResult = try JSONDecoder().decode(SearchResult.self, from: value )
-                            completion(apiResult)
                         } catch {}
                     case .failure(let error):
                         print(error)

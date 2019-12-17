@@ -58,7 +58,7 @@ class SearchViewController: UITableViewController {
             guard let article = resource.article else { return }
             guard let brand = resource.brand?.name else { return }
             resourceVC.resource = resource
-            NetworkManager.instance.fetchResourcesAlamofire(for: article, brand: brand) { result in
+            NetworkManager.instance.fetchResourcesAlamofire(for: article, brand: brand) { result, _ in
                 for resource in (result.resources ?? []) {
                     if resource.isEquals(by: article) {
                         resourceVC.resource = resource
