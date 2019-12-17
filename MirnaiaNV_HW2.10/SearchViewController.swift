@@ -19,14 +19,7 @@ class SearchViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Setup the Search Controller
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Артикул, 65550, GDB1044"
-        searchController.searchBar.autocapitalizationType = .none
-        searchController.searchBar.delegate = self
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        definesPresentationContext = true
+        setupSearchController()
         
         tableView.backgroundView = activityIndicator
         
@@ -82,6 +75,17 @@ class SearchViewController: UITableViewController {
         let backItem = UIBarButtonItem()
         backItem.title = resourceVC.resource.article
         navigationItem.backBarButtonItem = backItem
+    }
+    
+    private func setupSearchController() {
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Артикул, 65550, GDB1044"
+        searchController.searchBar.autocapitalizationType = .none
+        searchController.searchBar.delegate = self
+        
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
     }
 }
 

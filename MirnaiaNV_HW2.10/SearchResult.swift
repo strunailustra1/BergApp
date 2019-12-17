@@ -66,12 +66,12 @@ struct Warehouse: Decodable {
 struct Offer: Decodable {
     let warehouse: Warehouse?
     let price: Float?
-    let average_period: Int?
-    let assured_period: Int?
+    let averagePeriod: Int?
+    let assuredPeriod: Int?
     let reliability: Int?
-    let is_transit: Bool?
+    let isTransit: Bool?
     let quantity: Int?
-    let available_more: Bool?
-    let multiplication_factor: Int?
-    let delivery_type: Int?
+    let availableMore: Bool?
+    let multiplicationFactor: Int?
+    let deliveryType: Int?
 }

@@ -102,7 +102,9 @@ class NetworkManager {
                     switch dataResponse.result {
                     case .success(let value):
                         do {
-                            let apiResult = try JSONDecoder().decode(SearchResult.self, from: value)
+                            let decoder = JSONDecoder()
+                            decoder.keyDecodingStrategy = .convertFromSnakeCase
+                            let apiResult = try decoder.decode(SearchResult.self, from: value)
                             completion(apiResult, dataResponse.response)
                         } catch {}
                     case .failure(let error):
