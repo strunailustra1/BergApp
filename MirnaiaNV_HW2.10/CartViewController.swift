@@ -13,6 +13,7 @@ class CartViewController: UIViewController {
     @IBOutlet var quantityCartLabel: UILabel!
     @IBOutlet var amountCartLabel: UILabel!
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var saveOrderButton: UIButton!
     
     let cart = Cart.instance
     
@@ -35,6 +36,10 @@ class CartViewController: UIViewController {
         )
         
         updateCartElements()
+    }
+    
+    @IBAction func saveOrder() {
+        showAlert(title: "Save order", message: "Coming soon")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -65,6 +70,8 @@ class CartViewController: UIViewController {
     func updateCartElements() {
         quantityCartLabel.text = String(cart.cartQuantity)
         amountCartLabel.text = String(cart.cartAmount) + "₽"
+        saveOrderButton.isEnabled = cart.cartQuantity > 0
+        saveOrderButton.alpha = cart.cartQuantity > 0 ? 1.0 : 0.3
         cartItems = cart.getCartItemsArray()
         tableView.reloadData()
     }
@@ -92,5 +99,14 @@ extension CartViewController: UITableViewDelegate {
             tableView.deleteRows(at: [indexPath], with: .fade)
             updateCartElements()
         }
+    }
+}
+
+extension CartViewController {
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
 }

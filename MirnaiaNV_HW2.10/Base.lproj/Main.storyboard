@@ -433,6 +433,9 @@
                                 <state key="normal" title="Оформить заказ">
                                     <color key="titleColor" red="0.93336862330000003" green="0.93327957390000005" blue="0.9372554421" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveOrder" destination="NYO-sC-TSD" eventType="touchUpInside" id="kk3-Ga-oF0"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -455,6 +458,7 @@
                     <connections>
                         <outlet property="amountCartLabel" destination="Y2d-iE-BpR" id="a3L-uF-gKl"/>
                         <outlet property="quantityCartLabel" destination="kFW-Wr-VcE" id="GUe-dj-rk9"/>
+                        <outlet property="saveOrderButton" destination="G6i-OC-FrA" id="ZDO-tF-Y3O"/>
                         <outlet property="tableView" destination="Sgz-E3-lNV" id="s9m-NZ-vtl"/>
                     </connections>
                 </viewController>
@@ -487,6 +491,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="EWO-aR-pvp" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YNw-yN-oWd">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
