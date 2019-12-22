@@ -6,7 +6,9 @@
 //  Copyright © 2019 Наталья Мирная. All rights reserved.
 //
 
-struct CartItem {
+import Foundation
+
+struct CartItem: Decodable, Encodable {
     var quantity: Int
     let resource: Resource
     let offer: Offer
@@ -24,7 +26,11 @@ class Cart {
     
     static let instance = Cart()
     
+    private let userDefaults = UserDefaults.standard
+    
     private var items: [String:CartItem] = [:]
+    
+    private let userDefaultsKey = "cartItems"
      
     var cartQuantity: Int {
         var quantity = 0
@@ -42,13 +48,25 @@ class Cart {
         return (100 * amount).rounded() / 100
     }
     
-    func addToCart(cartItem: CartItem) {
-        let key = getKey(for: cartItem.resource, offer: cartItem.offer)
-        if cartItem.quantity > 0 {
-            items[key] = cartItem
+    init() {
+        guard let cartItems = userDefaults.object(forKey: userDefaultsKey) as? Data else { return }
+        guard let items = try? JSONDecoder().decode([String:CartItem].self, from: cartItems) else { return }
+        
+        self.items = items
+    }
+    
+    func addToCart(resource: Resource, offer: Offer, quantity: Int) {
+        let key = getKey(for:resource, offer: offer)
+        if quantity > 0 {
+            var resourceTmp = resource
+            resourceTmp.clearOffers()
+            items[key] = CartItem(quantity: quantity, resource: resourceTmp, offer: offer)
         } else {
             items[key] = nil
         }
+        
+        guard let cartItems = try? JSONEncoder().encode(items) else { return }
+        userDefaults.set(cartItems, forKey: userDefaultsKey)
     }
     
     func getCartItems() -> [String:CartItem] {

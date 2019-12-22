@@ -14,6 +14,8 @@ class ResourceViewController: UITableViewController {
     var analogues: [Resource] = []
     var analoguesRows: [Any] = []
     
+    let cart = Cart.instance
+    
     let activityIndicator = UIActivityIndicatorView(style: .medium)
     
     override func viewDidLoad() {
@@ -37,23 +39,27 @@ class ResourceViewController: UITableViewController {
     @IBAction func changeStepper(_ sender: UIStepper) {
         guard let offerCell = sender.superview?.superview?.superview as? OfferCell else { return }
         guard let indexPath = tableView.indexPath(for: offerCell) else { return }
+        
         let offer = getOffer(for: indexPath)
+        let resource = getResource(for: indexPath)
+        let cartItem = cart.getCartItem(for: resource, offer: offer)
         offerCell.orderQuantityLabel.text = String(Int(sender.value))
         offerCell.amountLabel.text = String((100 * sender.value * Double(offer.price ?? 0)).rounded() / 100) + "₽"
-        offerCell.cartButton.isEnabled = sender.value > 0
+        offerCell.cartButton.isEnabled = sender.value > 0 || cartItem != nil
     }
     
     @IBAction func addToCart(_ sender: UIButton) {
         guard let offerCell = sender.superview?.superview?.superview as? OfferCell else { return }
         guard let indexPath = tableView.indexPath(for: offerCell) else { return }
+        
         let offer = getOffer(for: indexPath)
         let resource = getResource(for: indexPath)
         let quantity = Int(offerCell.quantityStepper.value)
-        Cart.instance.addToCart(cartItem: CartItem(
-            quantity: quantity,
-            resource: resource,
-            offer: offer)
-        )
+        
+        cart.addToCart(resource: resource, offer: offer, quantity: quantity)
+        
+        let cartItem = cart.getCartItem(for: resource, offer: offer)
+        offerCell.cartButton.isEnabled = quantity > 0 || cartItem != nil
     }
     
     private func getOffer(for indexPath: IndexPath) -> Offer {

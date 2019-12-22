@@ -28,9 +28,11 @@ class CartViewController: UIViewController {
         guard let cartCell = sender.superview?.superview?.superview as? CartCell else { return }
         guard let indexPath = tableView.indexPath(for: cartCell) else { return }
         
-        var cartItem = cartItems[indexPath.row]
-        cartItem.changeQuantity(quantity: Int(sender.value))
-        Cart.instance.addToCart(cartItem: cartItem)
+        cart.addToCart(
+            resource: cartItems[indexPath.row].resource,
+            offer: cartItems[indexPath.row].offer,
+            quantity: Int(sender.value)
+        )
         
         updateCartElements()
     }
@@ -53,8 +55,7 @@ class CartViewController: UIViewController {
 
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(cartItems.count)
-        return cartItems.count
+        cartItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -65,11 +66,11 @@ extension CartViewController: UITableViewDataSource {
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            cart.addToCart(cartItem: CartItem(
-                quantity: 0,
+            cart.addToCart(
                 resource: cartItems[indexPath.row].resource,
-                offer: cartItems[indexPath.row].offer
-            ))
+                offer: cartItems[indexPath.row].offer,
+                quantity: 0
+            )
             cartItems.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             updateCartElements()

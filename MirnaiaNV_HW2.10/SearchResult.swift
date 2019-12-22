@@ -21,17 +21,17 @@ struct SearchError: Decodable {
     let text: String?
 }
 
-struct Brand: Decodable {
+struct Brand: Decodable, Encodable {
     let id: Int?
     let name: String?
 }
 
-struct Resource: Decodable {
+struct Resource: Decodable, Encodable {
     let id: Int?
     let article: String?
     let brand: Brand?
     let name: String?
-    let offers: [Offer]?
+    var offers: [Offer]?
     
     var titleText: String {
         "\(article ?? "") - \(brand?.name ?? "")"
@@ -39,6 +39,10 @@ struct Resource: Decodable {
     
     var searchNumber: String {
         getSearchNumber(by: article ?? "")
+    }
+    
+    mutating func clearOffers() {
+        offers = []
     }
     
     func isEquals(by article: String) -> Bool {
@@ -57,13 +61,13 @@ struct Resource: Decodable {
     }
 }
 
-struct Warehouse: Decodable {
+struct Warehouse: Decodable, Encodable {
     let id: Int?
     let name: String?
     let type: Int?
 }
 
-struct Offer: Decodable {
+struct Offer: Decodable, Encodable {
     let warehouse: Warehouse?
     let price: Float?
     let averagePeriod: Int?
