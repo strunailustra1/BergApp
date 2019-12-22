@@ -30,6 +30,10 @@ class ResourceViewController: UITableViewController {
         fillAnalogueRows()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     @IBAction func changeStepper(_ sender: UIStepper) {
         guard let offerCell = sender.superview?.superview?.superview as? OfferCell else { return }
         guard let indexPath = tableView.indexPath(for: offerCell) else { return }
@@ -97,14 +101,14 @@ class ResourceViewController: UITableViewController {
         }
         
         if indexPath.section == 0 && indexPath.row != 0 {
-            return OfferCell.create(with: (resource.offers?[indexPath.row - 1])!, for: indexPath, tableView: tableView)
+            return OfferCell.create(with: (resource.offers?[indexPath.row - 1])!, resource: resource, for: indexPath, tableView: tableView)
         }
         
         switch analoguesRows[indexPath.row] {
         case let resource as Resource:
             return ResourceCell.create(with: resource, for: indexPath, tableView: tableView)
         case let offer as Offer:
-            return OfferCell.create(with: offer, for: indexPath, tableView: tableView)
+            return OfferCell.create(with: offer, resource: getResource(for: indexPath), for: indexPath, tableView: tableView)
         default:
             return tableView.dequeueReusableCell(withIdentifier: "resourceCell", for: indexPath) as! ResourceCell
         }

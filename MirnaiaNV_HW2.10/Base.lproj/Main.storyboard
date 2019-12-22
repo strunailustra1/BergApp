@@ -323,6 +323,9 @@
                                                     <subviews>
                                                         <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="H4w-yY-0dC">
                                                             <rect key="frame" x="13.5" y="0.0" width="94" height="32"/>
+                                                            <connections>
+                                                                <action selector="changeStepper:" destination="NYO-sC-TSD" eventType="valueChanged" id="s8s-iI-fvn"/>
+                                                            </connections>
                                                         </stepper>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Zzj-z5-9Ub">
                                                             <rect key="frame" x="0.0" y="35.5" width="107.5" height="20.5"/>

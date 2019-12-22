@@ -7,16 +7,16 @@
 //
 
 struct CartItem {
-    let quantity: Int
+    var quantity: Int
     let resource: Resource
     let offer: Offer
     
     var amount: Float {
         (100 * Float(quantity) * (offer.price ?? 0)).rounded() / 100
     }
-    
-    var key: String {
-        "\(resource.id ?? 0)-\(offer.warehouse?.id ?? 0)"
+
+    mutating func changeQuantity(quantity: Int) {
+        self.quantity = quantity
     }
 }
 
@@ -43,10 +43,11 @@ class Cart {
     }
     
     func addToCart(cartItem: CartItem) {
+        let key = getKey(for: cartItem.resource, offer: cartItem.offer)
         if cartItem.quantity > 0 {
-            items[cartItem.key] = cartItem
+            items[key] = cartItem
         } else {
-            items[cartItem.key] = nil
+            items[key] = nil
         }
     }
     
@@ -60,5 +61,14 @@ class Cart {
             result.append(item)
         }
         return result
+    }
+    
+    func getCartItem(for resource: Resource, offer: Offer) -> CartItem? {
+        let key = getKey(for: resource, offer: offer)
+        return items[key]
+    }
+    
+    private func getKey(for resource: Resource, offer: Offer) -> String {
+        "\(resource.id ?? 0)-\(offer.warehouse?.id ?? 0)"
     }
 }

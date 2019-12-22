@@ -19,7 +19,7 @@ class OfferCell: UITableViewCell {
     @IBOutlet var orderQuantityLabel: UILabel!
     @IBOutlet var quantityStepper: UIStepper!
         
-    func configure(with offer: Offer) {
+    func configure(with offer: Offer, resource: Resource) {
         priceLabel.text = String(offer.price ?? 0) + "₽"
         quantityLabel.text = String(offer.quantity ?? 0) + " шт."
         warehouseNameLabel.text = offer.warehouse?.name ?? ""
@@ -28,16 +28,18 @@ class OfferCell: UITableViewCell {
         quantityStepper.stepValue = Double(offer.multiplicationFactor ?? 1)
         quantityStepper.maximumValue = Double(offer.quantity ?? 1)
         
-        quantityStepper.value = 0.0
-        amountLabel.text = "0.0" + "₽"
-        orderQuantityLabel.text = "0"
+        let cartItem = Cart.instance.getCartItem(for: resource, offer: offer)
         
-        cartButton.isEnabled = false
+        quantityStepper.value = Double(cartItem?.quantity ?? 0)
+        amountLabel.text = String(cartItem?.amount ?? 0) + "₽"
+        orderQuantityLabel.text = String(cartItem?.quantity ?? 0)
+        
+        cartButton.isEnabled = quantityStepper.value > 0
     }
     
-    static func create(with offer: Offer, for indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
+    static func create(with offer: Offer, resource: Resource, for indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "offerCell", for: indexPath) as! OfferCell
-        cell.configure(with: offer)
+        cell.configure(with: offer, resource: resource)
         return cell
     }
 }

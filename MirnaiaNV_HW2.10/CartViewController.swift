@@ -22,8 +22,17 @@ class CartViewController: UIViewController {
         super.viewWillAppear(animated)
         
         updateCartElements()
+    }
+    
+    @IBAction func changeStepper(_ sender: UIStepper) {
+        guard let cartCell = sender.superview?.superview?.superview as? CartCell else { return }
+        guard let indexPath = tableView.indexPath(for: cartCell) else { return }
         
-        //print(cartItems.count)
+        var cartItem = cartItems[indexPath.row]
+        cartItem.changeQuantity(quantity: Int(sender.value))
+        Cart.instance.addToCart(cartItem: cartItem)
+        
+        updateCartElements()
     }
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
