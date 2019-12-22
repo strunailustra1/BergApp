@@ -245,7 +245,7 @@
         <!--Корзина-->
         <scene sceneID="loI-Hl-fRX">
             <objects>
-                <viewController id="NYO-sC-TSD" sceneMemberID="viewController">
+                <viewController id="NYO-sC-TSD" customClass="CartViewController" customModule="MirnaiaNV_HW2_10" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aCb-3Y-dAo">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -254,7 +254,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="418"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cartCell" rowHeight="142" id="WiO-3P-NkA">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cartCell" rowHeight="142" id="WiO-3P-NkA" customClass="CartCell" customModule="MirnaiaNV_HW2_10" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="142"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WiO-3P-NkA" id="z78-aF-PcG">
@@ -267,7 +267,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akk-1I-vys">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Subtitle" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akk-1I-vys">
                                                     <rect key="frame" x="15" y="51" width="290" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
@@ -319,13 +319,13 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="bottom" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="0BF-RG-iEi">
-                                                    <rect key="frame" x="201.5" y="75" width="103.5" height="56"/>
+                                                    <rect key="frame" x="197.5" y="75" width="107.5" height="56"/>
                                                     <subviews>
                                                         <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="H4w-yY-0dC">
-                                                            <rect key="frame" x="9.5" y="0.0" width="94" height="32"/>
+                                                            <rect key="frame" x="13.5" y="0.0" width="94" height="32"/>
                                                         </stepper>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Zzj-z5-9Ub">
-                                                            <rect key="frame" x="0.0" y="35.5" width="103.5" height="20.5"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Zzj-z5-9Ub">
+                                                            <rect key="frame" x="0.0" y="35.5" width="107.5" height="20.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TIu-rQ-u8T">
                                                                     <rect key="frame" x="0.0" y="0.0" width="21" height="20.5"/>
@@ -334,7 +334,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99999.99" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5c-ld-fBe">
-                                                                    <rect key="frame" x="27" y="0.0" width="76.5" height="20.5"/>
+                                                                    <rect key="frame" x="31" y="0.0" width="76.5" height="20.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -362,8 +362,24 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="akk-1I-vys" secondAttribute="trailing" id="zld-Ih-aCn"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="amountLabel" destination="L5c-ld-fBe" id="UUt-em-v2j"/>
+                                            <outlet property="averagePeriodLabel" destination="Jid-qZ-jgV" id="cCt-Vc-fFK"/>
+                                            <outlet property="orderQuantityLabel" destination="TIu-rQ-u8T" id="S5o-PF-zgE"/>
+                                            <outlet property="priceLabel" destination="OfK-tk-5fy" id="7Kn-xD-Pyj"/>
+                                            <outlet property="quantityLabel" destination="j5s-rg-IM7" id="4Xa-9O-H8h"/>
+                                            <outlet property="quantityStepper" destination="H4w-yY-0dC" id="ltO-aH-oZ0"/>
+                                            <outlet property="reliabilityLabel" destination="UvJ-2K-0UL" id="7Zk-ui-88Q"/>
+                                            <outlet property="subtitleLabel" destination="akk-1I-vys" id="AfV-pa-1Hy"/>
+                                            <outlet property="titleLabel" destination="bBK-fZ-e5j" id="erB-rE-pq2"/>
+                                            <outlet property="warehouseNameLabel" destination="Ak3-lX-f4f" id="bVN-5e-AjL"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="NYO-sC-TSD" id="Npa-Zz-g70"/>
+                                    <outlet property="delegate" destination="NYO-sC-TSD" id="ZHZ-Mh-36t"/>
+                                </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="57" translatesAutoresizingMaskIntoConstraints="NO" id="nWo-nf-ayn">
                                 <rect key="frame" x="16" y="426" width="288" height="49"/>
@@ -432,6 +448,11 @@
                         <viewLayoutGuide key="safeArea" id="bsx-Xe-DpW"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Корзина" image="cart" catalog="system" id="2DR-Cp-fd3"/>
+                    <connections>
+                        <outlet property="amountCartLabel" destination="Y2d-iE-BpR" id="a3L-uF-gKl"/>
+                        <outlet property="quantityCartLabel" destination="kFW-Wr-VcE" id="GUe-dj-rk9"/>
+                        <outlet property="tableView" destination="Sgz-E3-lNV" id="s9m-NZ-vtl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cao-Up-lFo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
