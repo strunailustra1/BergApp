@@ -376,6 +376,7 @@
                                             <outlet property="subtitleLabel" destination="akk-1I-vys" id="AfV-pa-1Hy"/>
                                             <outlet property="titleLabel" destination="bBK-fZ-e5j" id="erB-rE-pq2"/>
                                             <outlet property="warehouseNameLabel" destination="Ak3-lX-f4f" id="bVN-5e-AjL"/>
+                                            <segue destination="9Iv-n8-dvH" kind="unwind" unwindAction="unwindFor:" id="cZu-a0-RTG"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -458,23 +459,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cao-Up-lFo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="9Iv-n8-dvH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="729.375" y="886.26760563380287"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="juY-lb-Tze">
-            <objects>
-                <viewController id="P5W-gf-ZtH" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="qPt-V3-aJ3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="ENL-KD-d1O"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2yk-q4-PBf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1590" y="886"/>
         </scene>
         <!--Поиск-->
         <scene sceneID="a5m-Kp-yh4">

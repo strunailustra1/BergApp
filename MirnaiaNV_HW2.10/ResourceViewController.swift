@@ -36,6 +36,10 @@ class ResourceViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    @IBAction func unwind(for segue: UIStoryboardSegue) {
+        
+    }
+    
     @IBAction func changeStepper(_ sender: UIStepper) {
         guard let offerCell = sender.superview?.superview?.superview as? OfferCell else { return }
         guard let indexPath = tableView.indexPath(for: offerCell) else { return }

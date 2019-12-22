@@ -37,13 +37,15 @@ class CartViewController: UIViewController {
         updateCartElements()
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        guard segue.identifier == "resourceItem" else { return }
-//        if let indexPath = tableView.indexPathForSelectedRow {
-//            let detailVC = segue.destination as! ResourceDetailViewController
-//            detailVC.resource = cartItems[indexPath.row].resource
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "goToResourceFromCart" else { return }
+        guard let indexPath = tableView.indexPathForSelectedRow else { return }
+
+        let resourceVC = segue.destination as! ResourceViewController
+        
+        resourceVC.resource = cartItems[indexPath.row].resource
+        resourceVC.analogues = []
+    }
     
     func updateCartElements() {
         quantityCartLabel.text = String(cart.cartQuantity)
