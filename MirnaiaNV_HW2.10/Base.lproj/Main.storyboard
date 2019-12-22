@@ -162,6 +162,9 @@
                                             <subviews>
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="C6U-Re-qAj">
                                                     <rect key="frame" x="8.5" y="0.0" width="94" height="32"/>
+                                                    <connections>
+                                                        <action selector="changeStepper:" destination="fJT-vs-z7r" eventType="valueChanged" id="Wwk-jJ-8pi"/>
+                                                    </connections>
                                                 </stepper>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="vwg-N6-3L6">
                                                     <rect key="frame" x="0.0" y="44.5" width="102.5" height="20.5"/>
@@ -212,9 +215,13 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="amountLabel" destination="kbf-ft-qw4" id="A0V-ie-lfK"/>
                                     <outlet property="averagePeriodLabel" destination="sDh-tB-I9i" id="gx7-vc-9Gi"/>
+                                    <outlet property="cartButton" destination="mLL-EQ-ua2" id="LQX-1U-sDg"/>
+                                    <outlet property="orderQuantityLabel" destination="dSN-KW-0ej" id="xlX-Fs-bZV"/>
                                     <outlet property="priceLabel" destination="RUT-MA-phv" id="cK1-QU-oBn"/>
                                     <outlet property="quantityLabel" destination="qM9-Fo-pUf" id="JJD-3I-NTZ"/>
+                                    <outlet property="quantityStepper" destination="C6U-Re-qAj" id="RKh-xh-0rz"/>
                                     <outlet property="reliabilityLabel" destination="FeA-84-PQZ" id="aE6-68-VL9"/>
                                     <outlet property="warehouseNameLabel" destination="a4D-dn-1wk" id="S1e-eJ-y0s"/>
                                 </connections>

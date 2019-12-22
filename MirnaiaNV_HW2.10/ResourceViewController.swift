@@ -29,7 +29,20 @@ class ResourceViewController: UITableViewController {
         
         fillAnalogueRows()
     }
-
+    
+    @IBAction func changeStepper(_ sender: UIStepper) {
+        guard let offerCell = sender.superview?.superview?.superview as? OfferCell else { return }
+        guard let indexPath = tableView.indexPath(for: offerCell) else { return }
+        let offer = getOffer(for: indexPath)
+        offerCell.orderQuantityLabel.text = String(Int(sender.value))
+        offerCell.amountLabel.text = String((100 * sender.value * Double(offer.price ?? 0)).rounded() / 100) + "₽"
+        offerCell.cartButton.isEnabled = sender.value > 0
+    }
+    
+    private func getOffer(for indexPath: IndexPath) -> Offer {
+        indexPath.section == 0 ? (resource.offers?[indexPath.row - 1])! : analoguesRows[indexPath.row] as! Offer
+    }
+    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         analogues.count > 0 ? 2 : 1
