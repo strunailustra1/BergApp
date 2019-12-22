@@ -88,7 +88,7 @@ class NetworkManager {
         }.resume()
     }
     
-    func fetchResourcesAlamofire(for article: String, brand: String = "", with completion: @escaping (SearchResult, HTTPURLResponse?) -> Void) {
+    func fetchResourcesAlamofire(for article: String, brand: String = "", withAnalogs: Bool = true, with completion: @escaping (SearchResult, HTTPURLResponse?) -> Void) {
         var items = [["resource_article": article]]
         if brand != "" {
             items.append(["brand_name":brand])
@@ -96,7 +96,7 @@ class NetworkManager {
         request(bergApiUrl,
                 method: .get,
                 parameters: ["items": items,
-                             "analogs": 1,
+                             "analogs": withAnalogs ? 1 : 0,
                              "key": bergApiKey],
                 encoding: URLEncoding.default).validate(statusCode: 200..<301).responseData { dataResponse in
                     switch dataResponse.result {

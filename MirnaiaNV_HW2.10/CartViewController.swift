@@ -38,13 +38,28 @@ class CartViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // FIXME: Переход с корзины работает не всегда
+        // Только при открытом втором экране (ResourceViewController) на шаге поиска
+        // Не понятно, почему так и как починить
+        
         guard segue.identifier == "goToResourceFromCart" else { return }
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
+        
+        let resource = cartItems[indexPath.row].resource
 
         let resourceVC = segue.destination as! ResourceViewController
-        
-        resourceVC.resource = cartItems[indexPath.row].resource
+        resourceVC.resource = resource
         resourceVC.analogues = []
+        
+        guard let article = resource.article else { return }
+        guard let brand = resource.brand?.name else { return }
+        NetworkManager.instance.fetchResourcesAlamofire(for: article, brand: brand, withAnalogs: false) { result, _ in
+            resourceVC.resource = result.resources?[0] ?? resource
+            DispatchQueue.main.async {
+                resourceVC.activityIndicator.stopAnimating()
+                resourceVC.tableView.reloadData()
+            }
+        }
     }
     
     func updateCartElements() {

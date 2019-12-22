@@ -26,13 +26,13 @@ class ResourceViewController: UITableViewController {
         
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
-
-        navigationItem.title = resource.titleText
         
         fillAnalogueRows()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        navigationItem.title = resource.titleText
+
         tableView.reloadData()
     }
     

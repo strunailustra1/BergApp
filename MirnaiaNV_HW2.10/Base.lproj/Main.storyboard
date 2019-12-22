@@ -376,7 +376,7 @@
                                             <outlet property="subtitleLabel" destination="akk-1I-vys" id="AfV-pa-1Hy"/>
                                             <outlet property="titleLabel" destination="bBK-fZ-e5j" id="erB-rE-pq2"/>
                                             <outlet property="warehouseNameLabel" destination="Ak3-lX-f4f" id="bVN-5e-AjL"/>
-                                            <segue destination="9Iv-n8-dvH" kind="unwind" unwindAction="unwindFor:" id="cZu-a0-RTG"/>
+                                            <segue destination="9Iv-n8-dvH" kind="unwind" identifier="goToResourceFromCart" unwindAction="unwindFor:" id="oeb-QC-7dR"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
