@@ -39,8 +39,35 @@ class ResourceViewController: UITableViewController {
         offerCell.cartButton.isEnabled = sender.value > 0
     }
     
+    @IBAction func addToCart(_ sender: UIButton) {
+        guard let offerCell = sender.superview?.superview?.superview as? OfferCell else { return }
+        guard let indexPath = tableView.indexPath(for: offerCell) else { return }
+        let offer = getOffer(for: indexPath)
+        let resource = getResource(for: indexPath)
+        let quantity = Int(offerCell.quantityStepper.value)
+        Cart.instance.addToCart(cartItem: CartItem(
+            quantity: quantity,
+            resource: resource,
+            offer: offer)
+        )
+    }
+    
     private func getOffer(for indexPath: IndexPath) -> Offer {
         indexPath.section == 0 ? (resource.offers?[indexPath.row - 1])! : analoguesRows[indexPath.row] as! Offer
+    }
+    
+    private func getResource(for indexPath: IndexPath) -> Resource {
+        if indexPath.section == 0 {
+            return resource
+        }
+        
+        var row = indexPath.row - 1
+        repeat {
+            if let resource = analoguesRows[row] as? Resource {
+                return resource
+            }
+            row -= 1
+        } while true
     }
     
     // MARK: - Table view data source

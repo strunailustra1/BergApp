@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0E7BA323AFC0E40009EB38 /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0E7BA223AFC0E40009EB38 /* Cart.swift */; };
 		1E284A4823A63EF10065D26B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E284A4723A63EF10065D26B /* AppDelegate.swift */; };
 		1E284A4A23A63EF10065D26B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E284A4923A63EF10065D26B /* SceneDelegate.swift */; };
 		1E284A4F23A63EF10065D26B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E284A4D23A63EF10065D26B /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		186AF1DE90A5B7EBE5CA10B4 /* Pods-MirnaiaNV_HW2.10.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MirnaiaNV_HW2.10.release.xcconfig"; path = "Target Support Files/Pods-MirnaiaNV_HW2.10/Pods-MirnaiaNV_HW2.10.release.xcconfig"; sourceTree = "<group>"; };
+		1E0E7BA223AFC0E40009EB38 /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		1E284A4423A63EF10065D26B /* MirnaiaNV_HW2.10.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MirnaiaNV_HW2.10.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E284A4723A63EF10065D26B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E284A4923A63EF10065D26B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 			children = (
 				1E284A4723A63EF10065D26B /* AppDelegate.swift */,
 				1E284A4923A63EF10065D26B /* SceneDelegate.swift */,
+				1E0E7BA223AFC0E40009EB38 /* Cart.swift */,
 				1E284A5B23A643810065D26B /* SearchViewController.swift */,
 				1E284A5F23A654480065D26B /* SearchResult.swift */,
 				1E284A5D23A643E50065D26B /* ResourceViewController.swift */,
@@ -95,7 +98,6 @@
 				F4AFE22AC687FBA8F806D66D /* Pods-MirnaiaNV_HW2.10.debug.xcconfig */,
 				186AF1DE90A5B7EBE5CA10B4 /* Pods-MirnaiaNV_HW2.10.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -223,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E284A4823A63EF10065D26B /* AppDelegate.swift in Sources */,
+				1E0E7BA323AFC0E40009EB38 /* Cart.swift in Sources */,
 				1E284A5C23A643810065D26B /* SearchViewController.swift in Sources */,
 				1ED7552223A6B748009D555F /* OfferCell.swift in Sources */,
 				1ED7552423A6C019009D555F /* ResourceCell.swift in Sources */,
