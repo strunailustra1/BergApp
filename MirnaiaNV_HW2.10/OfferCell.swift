@@ -35,6 +35,10 @@ class OfferCell: UITableViewCell {
         orderQuantityLabel.text = String(cartItem?.quantity ?? 0)
         
         cartButton.isEnabled = quantityStepper.value > 0
+        cartButton.setImage(
+            UIImage(systemName : quantityStepper.value > 0 ? "cart.fill.badge.plus" : "cart.badge.minus"),
+            for: UIControl.State.normal
+        )
     }
     
     static func create(with offer: Offer, resource: Resource, for indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {

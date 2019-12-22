@@ -50,9 +50,16 @@ class ResourceViewController: UITableViewController {
         offerCell.orderQuantityLabel.text = String(Int(sender.value))
         offerCell.amountLabel.text = String((100 * sender.value * Double(offer.price ?? 0)).rounded() / 100) + "₽"
         offerCell.cartButton.isEnabled = sender.value > 0 || cartItem != nil
+        offerCell.cartButton.setImage(
+            UIImage(systemName : sender.value > 0 ? "cart.fill.badge.plus" : "cart.badge.minus"),
+            for: UIControl.State.normal
+        )
+        
     }
     
     @IBAction func addToCart(_ sender: UIButton) {
+        sender.zoomIn()
+        
         guard let offerCell = sender.superview?.superview?.superview as? OfferCell else { return }
         guard let indexPath = tableView.indexPath(for: offerCell) else { return }
         
